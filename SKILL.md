@@ -13,8 +13,14 @@ description: >
   整理、Notion 页面审计、信息架构重构、数据库迁移方案.
 description_zh: 个人 Notion 空间审计与重构——只读审计，输出信息架构重设计与迁移方案
 description_en: Notion Personal Space Audit
-version: 1.0.1
+version: 1.0.2
 agent_created: true
+not_for:
+  - Team or company workspace audits (personal hub focus)
+  - Creating Notion content or writing pages
+  - Building Notion API integrations or automations
+  - Migrating content out of Notion to other platforms
+  - Executing the migration itself without a separate explicit authorization
 ---
 
 # notion-personal-space-audit
