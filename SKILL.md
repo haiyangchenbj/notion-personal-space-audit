@@ -13,11 +13,11 @@ description: >
   整理、Notion 页面审计、信息架构重构、数据库迁移方案.
 description_zh: 个人 Notion 空间审计与重构——只读审计，输出信息架构重设计与迁移方案
 description_en: Notion Personal Space Audit
-version: 1.0.3
+version: "1.0.4""
 agent_created: true
 not_for:
   - Team or company workspace audits (personal hub focus)
-  - Creating Notion content or writing pages
+  - Creating new Notion content or writing pages without explicit authorization
   - Building Notion API integrations or automations
   - Migrating content out of Notion to other platforms
   - Executing the migration itself without a separate explicit authorization
@@ -31,7 +31,7 @@ Use when the user asks to audit a Notion personal workspace or page, inspect sec
 
 ## Steps
 
-> Steps 2–4 are `[Deterministic]` (Notion API calls); steps 1 and 5–11 are `[LLM]` analysis and synthesis.
+> Steps 2–4 are `[Deterministic]` (Notion API calls); steps 1 and 5–12 are `[LLM]` analysis and synthesis.
 
 1. **[LLM]** Confirm the target page URL and scope. Treat the task as read-only unless the user explicitly authorizes a structural change.
 2. **[Deterministic]** Resolve the page ID from the URL and retrieve the page metadata.
@@ -44,10 +44,11 @@ Use when the user asks to audit a Notion personal workspace or page, inspect sec
 9. **[LLM]** Recommend minimal shared fields: content type, domain, status, occurrence date, organization date, sensitivity, and relations. Do not force one schema onto all content types.
 10. **[LLM]** Produce a concise Markdown report with evidence, signal-light findings, proposed tree, migration table, phased migration order, and a clear statement that no Notion content was changed.
 11. **[LLM]** If the user explicitly authorizes structure creation, create only empty navigation pages and usage instructions after the audit. Never move, delete, rename, or rewrite existing content unless separately authorized.
+12. **[LLM]** If the user explicitly authorizes updating an existing audit/guide page, append a clearly marked usage-notes section rather than replacing prior findings; make the write idempotent with a unique marker and read the page back to verify the marker and section headings.
 
 ## Hard Rules
 
-1. Read-only by default: no Notion write endpoint is called unless the user explicitly authorizes structure creation, and then only empty navigation pages.
+1. Read-only by default: no Notion write endpoint is called unless the user explicitly authorizes structure creation or updating an existing guide page; authorized guide-page updates must append rather than replace.
 2. Never move, delete, rename, or rewrite existing content as part of an audit or structure setup.
 3. Never expose access tokens in reports, logs, or user-facing output.
 4. Do not invent content the API did not return; mark inaccessible or uncertain areas explicitly.
@@ -59,9 +60,11 @@ Use when the user asks to audit a Notion personal workspace or page, inspect sec
 - Do not classify a sensitive analysis report as a log event merely because it concerns the same topic (emotions, relationships, health).
 - Do not merge raw conversations, derived reports, and action plans into one record. Keep source, analysis, and action linked but distinct.
 - Do not delete empty book/person placeholders during an audit. Put them in an archive or pending-review view first.
+- Orphan pages not under any database are easy to miss; enumerate workspace top-level nodes first and recurse. Do not rely on database enumeration alone.
 - Do not expose access tokens in reports, logs, or user-facing output.
 - Do not modify Notion without explicit confirmation. The audit should produce a migration plan first.
 - When structure creation is authorized, use idempotent title checks and create pages under the audited parent; do not move, delete, rename, or rewrite existing content as part of structure setup.
+- Notion block append requests must be chunked to at most 100 blocks; use a unique marker to prevent duplicate guide sections, and verify by reading back the full child-block list rather than trusting the write response alone.
 - Avoid inventing content that the API did not return. Mark inaccessible or uncertain areas explicitly.
 
 ## Failure Handling
