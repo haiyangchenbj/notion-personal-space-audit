@@ -13,7 +13,7 @@ description: >
   整理、Notion 页面审计、信息架构重构、数据库迁移方案.
 description_zh: 个人 Notion 空间审计与重构——只读审计，输出信息架构重设计与迁移方案
 description_en: Notion Personal Space Audit
-version: "1.0.4""
+version: "1.0.5"
 agent_created: true
 not_for:
   - Team or company workspace audits (personal hub focus)
@@ -96,5 +96,5 @@ Use when the user asks to audit a Notion personal workspace or page, inspect sec
 - Confirm the recursive crawl completed and report the page/database/row counts.
 - Confirm each root database has a schema inventory and row count.
 - Confirm the report includes a direct answer for ambiguous materials, especially sensitive reports.
-- Confirm no Notion write endpoint was called.
+- Confirm no Notion write endpoint was called without explicit authorization, and that any authorized guide-page update was read back to confirm the unique marker and section headings.
 - Confirm the output file exists and names the inspected page, scope, findings, and migration plan.
