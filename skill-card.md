@@ -1,6 +1,6 @@
 ## Description:
 
-Audits a personal Notion hub and its nested pages and databases to identify mixed content, empty placeholders, weak navigation, and sensitivity-boundary issues, then produces a read-only information-architecture redesign and migration map.
+Audits a personal Notion space for organization, navigation, and privacy issues, then proposes an information architecture and migration plan without changing content by default.
 
 This skill is ready for commercial/non-commercial use.
 
@@ -14,7 +14,7 @@ MIT-0
 
 ## Use Case:
 
-External users use this skill to have an agent audit a personal Notion workspace or page, including nested pages and inline databases, and produce practical recommendations for safer organization, searchability, sensitivity boundaries, and migration planning.
+Individuals and their assistants use this skill to review a personal Notion workspace, identify structural and sensitivity-boundary problems, and plan a safer, easier-to-navigate layout.
 
 ### Deployment Geography for Use:
 
@@ -22,40 +22,32 @@ Global
 
 ## Known Risks and Mitigations:
 
-Risk: The agent may read personal or sensitive Notion content within the selected audit scope.
+Risk: The audit can expose private pages and databases to the agent.
 
-Mitigation: Keep the Notion integration scoped to only the pages that should be reviewed, and install the skill only when that access is acceptable.
+Mitigation: Grant read access only to the Notion content needed for the requested audit.
 
-Risk: Optional structure creation could be mistaken for content migration or editing.
+Risk: Optional structure creation or guide-page updates can change the wrong Notion content.
 
-Mitigation: Require separate explicit approval for structure creation and limit it to empty navigation pages and usage instructions; do not move, delete, rename, or rewrite existing content.
-
-Risk: Ambiguous or inaccessible Notion content could lead to incorrect organization recommendations.
-
-Mitigation: Mark inaccessible or uncertain areas explicitly and place ambiguous content in pending review instead of forcing a classification.
-
-Risk: Access tokens or credential-like content could appear in reports or logs.
-
-Mitigation: Never expose access tokens in user-facing output, reports, or logs, and flag credential-like content for relocation.
+Mitigation: Keep the audit read-only; before any separate write, confirm the target parent or page and the expected changes.
 
 ## Reference(s):
 
+- [Notion Personal Space Audit on ClawHub](https://clawhub.ai/haiyangchenbj/skills/notion-personal-space-audit)
 - [Audit Dimensions Checklist](references/audit-checklist.md)
-- [ClawHub skill page](https://clawhub.ai/haiyangchenbj/skills/notion-personal-space-audit)
 
 ## Skill Output:
 
-**Output Type(s):** [Text, Markdown, Guidance]
+**Output Type(s):** [Analysis, Guidance]
 
-**Output Format:** [Markdown audit report with findings, proposed information architecture, migration table, phased migration order, and a declaration that no Notion content was changed.]
+**Output Format:** [Markdown]
 
 **Output Parameters:** [1D]
 
-**Other Properties Related to Output:** [May include optional empty navigation-page setup guidance only after explicit user authorization.]
+**Other Properties Related to Output:** [Scope and crawl summary, findings, proposed structure, migration map, and a statement of whether Notion content was changed.]
 
 ## Skill Version(s):
 
-1.0.3 (source: server release and frontmatter)
+1.0.4 (source: frontmatter and server-resolved release metadata)
 
 ## Ethical Considerations:
 
