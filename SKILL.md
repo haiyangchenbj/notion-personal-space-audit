@@ -13,7 +13,7 @@ description: >
   整理、Notion 页面审计、信息架构重构、数据库迁移方案.
 description_zh: 个人 Notion 空间审计与重构——只读审计，输出信息架构重设计与迁移方案
 description_en: Notion Personal Space Audit
-version: "1.0.5"
+version: "1.0.6"
 agent_created: true
 not_for:
   - Team or company workspace audits (personal hub focus)
@@ -74,6 +74,7 @@ Use when the user asks to audit a Notion personal workspace or page, inspect sec
 | API returns 401/403 on a sub-page | Mark the branch as inaccessible; continue the audit on accessible areas; report the gap |
 | Recursive crawl times out on a very large space | Crawl top two levels fully; sample deeper levels and state the sampling method |
 | Database schema unreadable | Record the error and the visible properties; do not guess types |
+| Notion API returns 429 / rate limit during the recursive crawl | Back off and retry the limited request; if it persists, crawl the remaining top-level nodes and list the rate-limited branches in the access-gap summary |
 | Ambiguous content cannot be classified | List it in a pending-review section with the ambiguity stated, rather than forcing a category |
 | User requests in-audit deletion | Refuse; deletion is out of audit scope — produce the migration plan first |
 
